@@ -17,7 +17,7 @@ import com.topografix.gpx.GpxType;
  * @author Jason Andersen andersen.jason@gmail.com
  * @since  Jun 8, 2013
  */
-public class JAXBDeserializeGPXTest {
+public class JaxbDeserializeGpxTest {
     
     private File gpxFile = new File("2013-06-06T16-49-50Z.gpx");
     
