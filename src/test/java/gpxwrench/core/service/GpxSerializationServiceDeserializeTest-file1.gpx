@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1"
+		xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3"
+		xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
+		xmlns:badelf="http://bad-elf.com/xmlschemas"
+		version="1.1"
+		creator="Bad Elf GPS Pro 2.0.48"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://bad-elf.com/xmlschemas http://bad-elf.com/xmlschemas/GpxExtensionsV1.xsd">
+	
+	<metadata>
+		<extensions>
+			<!-- Name -->
+			<badelf:modelName>Bad Elf GPS Pro</badelf:modelName>
+			<!-- Ser No -->
+			<badelf:modelSerialNumber>120048</badelf:modelSerialNumber>
+			<!-- Model -->
+			<badelf:modelNumber>BE-GPS-2200</badelf:modelNumber>
+			<!-- Hardware Revision -->
+			<badelf:modelHardwareRevision>2.0.0</badelf:modelHardwareRevision>
+			<!-- Firmware Revision -->
+			<badelf:modelFirmwareRevision>2.0.48</badelf:modelFirmwareRevision>
+		</extensions>
+	</metadata>
+	
+	<trk>
+		<name>Test Track</name>
+		<trkseg>
+			<trkpt lat="56.459316" lon="-132.385025"><ele>3</ele><time>2013-06-06T16:49:50Z</time><hdop>0.7</hdop><extensions><badelf:speed>1.800554</badelf:speed></extensions></trkpt>
+			<trkpt lat="56.459007" lon="-132.385971"><ele>2.3</ele><time>2013-06-06T16:50:20Z</time><hdop>0.7</hdop><extensions><badelf:speed>2.366442</badelf:speed></extensions></trkpt>
+			<trkpt lat="56.458626" lon="-132.386948"><ele>0.2</ele><time>2013-06-06T16:50:50Z</time><hdop>0.7</hdop><extensions><badelf:speed>2.520776</badelf:speed></extensions></trkpt>
+			<trkpt lat="56.45813" lon="-132.387741"><ele>2.2</ele><time>2013-06-06T16:51:21Z</time><hdop>0.7</hdop><extensions><badelf:speed>2.469331</badelf:speed></extensions></trkpt>
+			<trkpt lat="56.457623" lon="-132.388504"><ele>3.2</ele><time>2013-06-06T16:51:51Z</time><hdop>0.7</hdop><extensions><badelf:speed>2.417887</badelf:speed></extensions></trkpt>
+			<trkpt lat="56.457081" lon="-132.389221"><ele>4.8</ele><time>2013-06-06T16:52:21Z</time><hdop>0.7</hdop><extensions><badelf:speed>2.57222</badelf:speed></extensions></trkpt>
+			<trkpt lat="56.456478" lon="-132.389847"><ele>5.7</ele><time>2013-06-06T16:52:51Z</time><hdop>0.7</hdop><extensions><badelf:speed>2.417887</badelf:speed></extensions></trkpt>
+			<trkpt lat="56.455818" lon="-132.390244"><ele>3.9</ele><time>2013-06-06T16:53:22Z</time><hdop>0.7</hdop><extensions><badelf:speed>2.520776</badelf:speed></extensions></trkpt>
+			<trkpt lat="56.455143" lon="-132.390305"><ele>2.1</ele><time>2013-06-06T16:53:52Z</time><hdop>0.7</hdop><extensions><badelf:speed>2.520776</badelf:speed></extensions></trkpt>
+			<trkpt lat="56.454464" lon="-132.390594"><ele>2.6</ele><time>2013-06-06T16:54:22Z</time><hdop>0.7</hdop><extensions><badelf:speed>2.57222</badelf:speed></extensions></trkpt>
+		</trkseg>
+	</trk>
+</gpx>
+

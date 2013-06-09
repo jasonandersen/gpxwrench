@@ -1,6 +1,6 @@
 package gpxwrench.core.service;
 
-import gpxwrench.core.Track;
+import gpxwrench.core.domain.Track;
 import gpxwrench.core.exception.NoTracksFoundException;
 
 import java.io.File;

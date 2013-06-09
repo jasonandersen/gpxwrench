@@ -2,7 +2,7 @@ package gpxwrench.core.service;
 
 import static org.junit.Assert.*;
 
-import gpxwrench.core.service.impl.GpxXmlParserServiceJaxbImpl;
+import gpxwrench.core.service.impl.GpxSerializationServiceJaxbImpl;
 
 import java.io.File;
 
@@ -13,13 +13,13 @@ import com.topografix.gpx.GpxType;
 
 
 /**
- * Testing the {@link GpxXmlParserService} implementation.
+ * Testing the {@link GpxSerializationService} implementation.
  * @author Jason Andersen andersen.jason@gmail.com
  * @since  Jun 8, 2013
  */
 public class GpxXmlParserServiceTest {
 
-    private GpxXmlParserService service;
+    private GpxSerializationService service;
     
     private File gpxFile;
     
@@ -28,7 +28,7 @@ public class GpxXmlParserServiceTest {
         /*
          * TODO we should be using Spring to do this
          */
-        service = new GpxXmlParserServiceJaxbImpl();
+        service = new GpxSerializationServiceJaxbImpl();
         gpxFile = new File("2013-06-06T16-49-50Z.gpx");
     }
     
@@ -37,7 +37,7 @@ public class GpxXmlParserServiceTest {
      */
     @Test
     public void testParse() {
-        GpxType gpx = service.parse(gpxFile);
+        GpxType gpx = service.deserialize(gpxFile);
         assertNotNull(gpx);
     }
 }

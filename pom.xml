@@ -5,4 +5,34 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>GPX Wrench</name>
   <description>Utility software to manipulate data from GPX files</description>
+  <dependencies>
+    <!-- Spring -->
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-core</artifactId>
+  		<version>3.2.3.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-test</artifactId>
+  		<version>3.2.3.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-context</artifactId>
+  		<version>3.2.3.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-beans</artifactId>
+  		<version>3.2.3.RELEASE</version>
+  	</dependency>
+  	
+  	<!-- Apache Commons -->
+  	<dependency>
+  		<groupId>org.apache.commons</groupId>
+  		<artifactId>commons-lang3</artifactId>
+  		<version>3.1</version>
+  	</dependency>
+  </dependencies>
 </project>
