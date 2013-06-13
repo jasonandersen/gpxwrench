@@ -1,4 +1,4 @@
-package gpxwrench.core.domain;
+package gpxwrench.core.position;
 
 import gpxwrench.core.measurement.Distance;
 

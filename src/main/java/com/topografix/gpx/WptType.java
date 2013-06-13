@@ -83,7 +83,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "pdop",
     "ageofdgpsdata",
     "dgpsid",
-    "extensions"
+    "extensions",
+    "sequence"
 })
 public class WptType {
 
@@ -112,6 +113,33 @@ public class WptType {
     protected BigDecimal lat;
     @XmlAttribute(name = "lon", required = true)
     protected BigDecimal lon;
+    protected Integer sequence;
+    
+
+    /**
+     * Gets the value of the sequence property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer}
+     *     
+     */
+    public Integer getSequence() {
+        return sequence;
+    }
+
+    /**
+     * Sets the value of the sequence property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer}
+     *     
+     */
+    public void setSequence(Integer value) {
+        this.sequence = value;
+    }
+
 
     /**
      * Gets the value of the ele property.

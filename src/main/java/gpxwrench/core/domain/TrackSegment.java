@@ -1,5 +1,6 @@
 package gpxwrench.core.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,6 +10,16 @@ import java.util.List;
  */
 public class TrackSegment {
     
-    private List<TrackPoint> points;
+    private List<TrackPoint> trackPoints = new ArrayList<TrackPoint>();
+
+    
+    public List<TrackPoint> getTrackPoints() {
+        return trackPoints;
+    }
+
+    
+    public void setTrackPoints(List<TrackPoint> trackPoints) {
+        this.trackPoints = trackPoints;
+    }
     
 }

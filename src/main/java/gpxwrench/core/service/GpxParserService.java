@@ -15,8 +15,7 @@ import java.util.Collection;
 public interface GpxParserService {
     
     /**
-     * Parses a GPX file into tracks, stores the tracks in the local DB and returns them
-     * in a collection
+     * Parses a GPX file into tracks and returns them in a collection.
      * @param gpxFile
      * @return a collection of tracks, will never return null and will never return an
      *      empty collection

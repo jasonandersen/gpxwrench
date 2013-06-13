@@ -58,7 +58,9 @@ import javax.xml.bind.annotation.XmlType;
     "number",
     "type",
     "extensions",
-    "trkseg"
+    "trkseg",
+    "gpx",
+    "fileName"
 })
 public class TrkType {
 
@@ -72,6 +74,57 @@ public class TrkType {
     protected String type;
     protected ExtensionsType extensions;
     protected List<TrksegType> trkseg;
+    protected GpxType gpx;
+    protected String fileName;
+    
+
+    /**
+     * Gets the value of the fileName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String}
+     *     
+     */
+    public String getFileName() {
+        return fileName;
+    }
+
+    /**
+     * Sets the value of the fileNam property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFileName(String value) {
+        this.fileName = value;
+    }
+    
+    /**
+     * Gets the value of the gpx property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link GpxType}
+     *     
+     */
+    public GpxType getGpx() {
+        return gpx;
+    }
+
+    /**
+     * Sets the value of the gpx property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link GpxType }
+     *     
+     */
+    public void setGpx(GpxType value) {
+        this.gpx = value;
+    }
 
     /**
      * Gets the value of the name property.

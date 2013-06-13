@@ -6,6 +6,7 @@ import java.io.File;
 
 import javax.xml.bind.JAXB;
 
+import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Service;
 
 import com.topografix.gpx.GpxType;
@@ -23,6 +24,7 @@ public class GpxSerializationServiceJaxbImpl implements GpxSerializationService 
      * @see gpxwrench.core.service.GpxXmlParserService#parse(java.io.File)
      */
     public GpxType deserialize(File gpxFile) {
+        Validate.notNull(gpxFile);
         return JAXB.unmarshal(gpxFile, GpxType.class);
     }
 

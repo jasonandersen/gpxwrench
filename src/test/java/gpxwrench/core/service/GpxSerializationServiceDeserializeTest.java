@@ -50,6 +50,14 @@ public class GpxSerializationServiceDeserializeTest {
     }
     
     /**
+     * Validate null input is handled properly.
+     */
+    @Test(expected=NullPointerException.class)
+    public void testNullInput() {
+        service.deserialize(null);
+    }
+    
+    /**
      * Validate deserialized track.
      */
     @Test

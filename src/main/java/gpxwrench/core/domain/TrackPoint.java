@@ -1,6 +1,11 @@
 package gpxwrench.core.domain;
 
+import gpxwrench.core.measurement.Distance;
+import gpxwrench.core.position.Position;
+import java.math.BigDecimal;
 import java.util.Calendar;
+
+import org.apache.commons.lang3.Validate;
 
 
 /**
@@ -9,44 +14,63 @@ import java.util.Calendar;
  * @author Jason Andersen andersen.jason@gmail.com
  * @since  Jun 8, 2013
  */
-public class TrackPoint {
+public class TrackPoint implements Position {
     
-    private PositionImpl position;
+    private final Position position;
     
-    private Calendar timestamp;
+    private final Calendar timestamp;
     
-    private int sequence;
-
+    private final Integer sequence;
     
-    public PositionImpl getPosition() {
-        return position;
-    }
-
-    
-    public void setPosition(PositionImpl position) {
+    /**
+     * Constructor
+     * @param position
+     * @param timestamp
+     * @param sequence
+     */
+    public TrackPoint(Position position, Calendar timestamp, Integer sequence) {
+        Validate.notNull(position);
+        Validate.notNull(timestamp);
+        Validate.notNull(sequence);
+        
         this.position = position;
+        this.timestamp = timestamp;
+        this.sequence = sequence;
     }
 
+    /* 
+     * @see gpxwrench.core.domain.Position#getLatitude()
+     */
+    public BigDecimal getLatitude() {
+        return position.getLatitude();
+    }
+
+    /* 
+     * @see gpxwrench.core.domain.Position#getLongitude()
+     */
+    public BigDecimal getLongitude() {
+        return position.getLongitude();
+    }
+
+    /* 
+     * @see gpxwrench.core.domain.Position#getAltitude()
+     */
+    public Distance getAltitude() {
+        return position.getAltitude();
+    }
     
+    /**
+     * @return the date/time of this track point
+     */
     public Calendar getTimestamp() {
         return timestamp;
     }
 
-    
-    public void setTimestamp(Calendar timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    
+    /**
+     * @return the sequence of this track point within its parent track segment
+     */
     public int getSequence() {
         return sequence;
     }
 
-    
-    public void setSequence(int sequence) {
-        this.sequence = sequence;
-    }
-    
-    
-    
 }
