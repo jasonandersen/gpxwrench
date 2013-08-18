@@ -21,6 +21,7 @@ import gpxwrench.core.domain.TrackSegment;
 import gpxwrench.core.exception.NoTracksFoundException;
 import gpxwrench.core.service.GpxParserService;
 import gpxwrench.core.service.GpxSerializationService;
+import gpxwrench.core.service.TrackSegmentProcessor;
 
 /**
  * Implementation of the {@link GpxParserService} interface.
@@ -34,15 +35,23 @@ public class GpxParserServiceImpl implements GpxParserService {
     
     private final ConversionService conversionService;
     
+    private final List<TrackSegmentProcessor> segmentProcessors;
+    
     /**
      * Constructor.
      * @param serializationService
      * @param conversionService
+     * @param outlierService
      */
     @Autowired
-    public GpxParserServiceImpl(GpxSerializationService serializationService, ConversionService conversionService) {
+    public GpxParserServiceImpl(
+            GpxSerializationService serializationService, 
+            ConversionService conversionService,
+            List<TrackSegmentProcessor> segmentProcessors) {
+        
         this.serializationService = serializationService;
         this.conversionService = conversionService;
+        this.segmentProcessors = segmentProcessors;
     }
     
     /* 
@@ -50,10 +59,6 @@ public class GpxParserServiceImpl implements GpxParserService {
      */
     public Collection<Track> parseTracks(File gpxFile) throws NoTracksFoundException {
         Validate.notNull(gpxFile);
-        /*
-         * deserialize
-         * loop through tracks
-         */
         GpxType gpx = serializationService.deserialize(gpxFile);
         List<TrkType> gpxTracks = gpx.getTrk();
         if (gpxTracks == null || gpxTracks.isEmpty()) {
@@ -63,7 +68,8 @@ public class GpxParserServiceImpl implements GpxParserService {
         for (TrkType gpxTrack : gpxTracks) {
             gpxTrack.setGpx(gpx);
             gpxTrack.setFileName(gpxFile.getName());
-            tracks.add(parseTrack(gpxTrack));
+            Track track = parseTrack(gpxTrack);
+            tracks.add(track);
         }
         return tracks;
     }
@@ -101,5 +107,6 @@ public class GpxParserServiceImpl implements GpxParserService {
         }
         return segment;
     }
+
 
 }

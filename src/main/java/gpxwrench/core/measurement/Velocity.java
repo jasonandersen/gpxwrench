@@ -4,23 +4,22 @@ import java.math.BigDecimal;
 
 
 /**
- * A measurement of distance.
- * 
+ * Measurement of velocity.
  * @author Jason Andersen andersen.jason@gmail.com
- * @since  Jun 7, 2013
+ * @since  Jun 16, 2013
  */
-public class Distance {
+public class Velocity {
     
     private final BigDecimal value;
     
-    private final DistanceUnit unit;
+    private final VelocityUnit unit;
     
     /**
-     * Constructor.
+     * Constructor
      * @param value
      * @param unit
      */
-    public Distance(BigDecimal value, DistanceUnit unit) {
+    public Velocity(BigDecimal value, VelocityUnit unit) {
         this.value = value;
         this.unit = unit;
     }
@@ -28,8 +27,9 @@ public class Distance {
     public BigDecimal getValue() {
         return value;
     }
-    
-    public DistanceUnit getUnit() {
+
+    public VelocityUnit getUnit() {
         return unit;
     }
+    
 }
