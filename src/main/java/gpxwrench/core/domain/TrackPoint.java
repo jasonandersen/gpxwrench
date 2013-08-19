@@ -2,7 +2,7 @@ package gpxwrench.core.domain;
 
 import gpxwrench.core.measurement.Distance;
 import gpxwrench.core.position.Position;
-import java.math.BigDecimal;
+
 import java.util.Calendar;
 
 import org.apache.commons.lang3.Validate;
@@ -41,14 +41,14 @@ public class TrackPoint implements Position {
     /* 
      * @see gpxwrench.core.domain.Position#getLatitude()
      */
-    public BigDecimal getLatitude() {
+    public double getLatitude() {
         return position.getLatitude();
     }
 
     /* 
      * @see gpxwrench.core.domain.Position#getLongitude()
      */
-    public BigDecimal getLongitude() {
+    public double getLongitude() {
         return position.getLongitude();
     }
 

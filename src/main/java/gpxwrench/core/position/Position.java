@@ -2,8 +2,6 @@ package gpxwrench.core.position;
 
 import gpxwrench.core.measurement.Distance;
 
-import java.math.BigDecimal;
-
 
 /**
  * A three dimensional position on Earth.
@@ -16,12 +14,12 @@ public interface Position {
     /**
      * @return position's latitude coordinate
      */
-    BigDecimal getLatitude();
+    double getLatitude();
     
     /**
      * @return position's longitude coordinate
      */
-    BigDecimal getLongitude();
+    double getLongitude();
     
     /**
      * @return position's altitude

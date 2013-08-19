@@ -33,7 +33,8 @@ public class WptTypeToTrackPointConverter implements Converter<WptType, TrackPoi
         if (source == null) {
             return null;
         }
-        Position position = positionFactory.createPosition(source.getLat(), source.getLon(), source.getEle());
+        Position position = positionFactory.createPosition(
+        		source.getLat().doubleValue(), source.getLon().doubleValue(), source.getEle().doubleValue());
         GregorianCalendar timestamp = source.getTime().toGregorianCalendar(DEFAULT_TZ, Locale.getDefault(), null);
         Integer sequence = source.getSequence();
         return new TrackPoint(position, timestamp, sequence);

@@ -1,9 +1,9 @@
 package gpxwrench.core.calculation;
 
-import java.math.BigDecimal;
 
 import org.apache.commons.lang3.Validate;
 
+import gpxwrench.core.Constants;
 import gpxwrench.core.domain.TrackPoint;
 import gpxwrench.core.measurement.Distance;
 import gpxwrench.core.measurement.DistanceUnit;
@@ -28,22 +28,12 @@ public class Calculations {
      */
     public Distance distance(Position a, Position b) {
         //TODO - implement distance method
-    	double distanceDbl = distance(
-    			a.getLatitude().doubleValue(), b.getLatitude().doubleValue(), 
-    			a.getLongitude().doubleValue(), b.getLongitude().doubleValue(), 
-    			a.getAltitude().getValue().doubleValue(), b.getAltitude().getValue().doubleValue());
-    	BigDecimal distance = BigDecimal.valueOf(distanceDbl);
+    	double distance = distance(
+    			a.getLatitude(), b.getLatitude(), 
+    			a.getLongitude(), b.getLongitude(), 
+    			a.getAltitude().getValue(), b.getAltitude().getValue());
     	return new Distance(distance, DistanceUnit.METER);
     }
-    
-    
-    /**
-     * @return a distance object representing zero meters
-     */
-    private Distance zeroDistance() {
-		return new Distance(BigDecimal.ZERO, DistanceUnit.METER);
-	}
-
 
 
 	/*
@@ -57,7 +47,6 @@ public class Calculations {
     private double distance(double lat1, double lat2, double lon1, double lon2,
             double el1, double el2) {
 
-        final int R = 6371; // Radius of the earth
 
         Double latDistance = convertDegreesToRadians(lat2 - lat1);
         Double lonDistance = convertDegreesToRadians(lon2 - lon1);
@@ -65,49 +54,20 @@ public class Calculations {
                 + Math.cos(convertDegreesToRadians(lat1)) * Math.cos(convertDegreesToRadians(lat2))
                 * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
         Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double distance = R * c * 1000; // convert to meters
+        double distance = Constants.EARTH_RADIUS_KM * c * 1000; // convert to meters
 
         double height = el1 - el2;
         distance = Math.pow(distance, 2) + Math.pow(height, 2);
         return Math.sqrt(distance);
     }
-    
-
-	/*
-     * Calculate distance between two points in latitude and longitude taking
-     * into account height difference. If you are not interested in height
-     * difference pass 0.0. Uses Haversine method as its base.
-     * 
-     * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters
-     * el2 End altitude in meters
-     */
-    private BigDecimal distance(BigDecimal lat1, BigDecimal lat2, BigDecimal lon1, BigDecimal lon2,
-            BigDecimal el1, BigDecimal el2) {
-
-        final int R = 6371; // Radius of the earth in kilometers
-
-        BigDecimal latDistance = convertDegreesToRadians(lat2.subtract(lat1));
-        BigDecimal lonDistance = convertDegreesToRadians(lon2.subtract(lon1));
-        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(convertDegreesToRadians(lat1)) * Math.cos(convertDegreesToRadians(lat2))
-                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double distance = R * c * 1000; // convert to meters
-
-        double height = el1 - el2;
-        distance = Math.pow(distance, 2) + Math.pow(height, 2);
-        return Math.sqrt(distance);
-    }
-    
     
     /**
      * Converts degrees into radians
      * @param deg
      * @return
      */
-    private BigDecimal convertDegreesToRadians(BigDecimal deg) {
-    	BigDecimal pi = BigDecimal.valueOf(Math.PI);
-        return deg.multiply(pi).divide(BigDecimal.valueOf(180.0));
+    private double convertDegreesToRadians(double deg) {
+    	return (deg * Math.PI) / 180.0;
     }
 
     
@@ -131,13 +91,13 @@ public class Calculations {
         long durationInMillis = endMillis - beginMillis;
         if (durationInMillis == 0L) {
             //avoid the divide by zero error
-            return new Velocity(BigDecimal.ZERO, VelocityUnit.METERS_PER_SECOND);
+            return new Velocity(0, VelocityUnit.METERS_PER_SECOND);
         }
         
-        BigDecimal durationInSeconds = BigDecimal.valueOf((double)durationInMillis / (double)1000);
+        double durationInSeconds = (double)durationInMillis / 1000.0;
         
         Distance distance = distance(begin, end);
-        BigDecimal velocityMps =  distance.getValue().divide(durationInSeconds);
+        double velocityMps =  distance.getValue() / durationInSeconds;
         return new Velocity(velocityMps, VelocityUnit.METERS_PER_SECOND);
     }
     
@@ -148,11 +108,11 @@ public class Calculations {
      * @return positive bearing in degrees
      * @throws IllegalArgumentException when either parameter is null
      */
-    public BigDecimal bearing(Position begin, Position end) {
+    public double bearing(Position begin, Position end) {
     	
     	//TODO - implement bearing
     	
-        return null;
+        return -1;
     }
     
     /**
@@ -178,7 +138,7 @@ public class Calculations {
      * @param end
      * @return a positive value indicating the significance to the route of the <code>target</code> point
      */
-    public BigDecimal significance(Position start, Position target, Position end) {
+    public double significance(Position start, Position target, Position end) {
         /*
          * The significance of a point over a span defined from start to end is considered to be:
          * 
@@ -187,13 +147,11 @@ public class Calculations {
          *      sqrt(span)
          */
         Distance span = distance(start, end);
-        if (span.getValue().compareTo(BigDecimal.ZERO) == 0) {
-            return BigDecimal.ZERO;
+        if (span.getValue() == 0) {
+            return 0;
         }
         Distance deflection = deflection(start, target, end);
-        BigDecimal numerator = deflection.getValue();
-        Double spanRoot = Math.sqrt(span.getValue().doubleValue());
-        BigDecimal divisor = BigDecimal.valueOf(spanRoot);
-        return numerator.divide(divisor);
+        double spanRoot = Math.sqrt(span.getValue());
+        return deflection.getValue() / spanRoot;
     }
 }

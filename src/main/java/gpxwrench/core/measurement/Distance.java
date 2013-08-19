@@ -1,6 +1,5 @@
 package gpxwrench.core.measurement;
 
-import java.math.BigDecimal;
 
 
 /**
@@ -11,9 +10,9 @@ import java.math.BigDecimal;
  */
 public class Distance {
     
-	private final static String TO_STRING = "%s %s";
+	private final static String TO_STRING = "%d %s";
 	
-    private final BigDecimal value;
+    private final double value;
     
     private final DistanceUnit unit;
     
@@ -22,12 +21,12 @@ public class Distance {
      * @param value
      * @param unit
      */
-    public Distance(BigDecimal value, DistanceUnit unit) {
+    public Distance(double value, DistanceUnit unit) {
         this.value = value;
         this.unit = unit;
     }
 
-    public BigDecimal getValue() {
+    public double getValue() {
         return value;
     }
     
@@ -36,6 +35,6 @@ public class Distance {
     }
     
     public String toString() {
-    	return String.format(TO_STRING, value.toString(), unit);
+    	return String.format(TO_STRING, value, unit);
     }
 }

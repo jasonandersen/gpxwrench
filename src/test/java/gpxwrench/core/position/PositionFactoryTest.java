@@ -1,10 +1,7 @@
 package gpxwrench.core.position;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.math.BigDecimal;
-
+import gpxwrench.core.Constants;
 import gpxwrench.core.measurement.Distance;
 import gpxwrench.core.measurement.DistanceUnit;
 import gpxwrench.core.test.AbstractIntegrationTest;
@@ -31,10 +28,10 @@ public class PositionFactoryTest extends AbstractIntegrationTest {
     @Test
     public void testStringLatitudeLongitudeAltitude() {
         pos = factory.createPosition("59.0", "-122.0", "10.0");
-        assertEquals(new BigDecimal("59.0"), pos.getLatitude());
-        assertEquals(new BigDecimal("-122.0"), pos.getLongitude());
+        assertEquals(59.0, pos.getLatitude(), Constants.TEST_DELTA);
+        assertEquals(-122.0, pos.getLongitude(), Constants.TEST_DELTA);
         Distance altitude = pos.getAltitude();
-        assertTrue(altitude.getValue().compareTo(new BigDecimal("10")) == 0);
+        assertEquals(10.0, altitude.getValue(), Constants.TEST_DELTA);
         assertEquals(DistanceUnit.METER, altitude.getUnit());
     }
     
@@ -43,11 +40,11 @@ public class PositionFactoryTest extends AbstractIntegrationTest {
      */
     @Test
     public void testBigDecimalLatitudeLongitudeAltitude() {
-        pos = factory.createPosition(new BigDecimal("59.0"), new BigDecimal("-122.0"), new BigDecimal("10.0"));
-        assertEquals(new BigDecimal("59.0"), pos.getLatitude());
-        assertEquals(new BigDecimal("-122.0"), pos.getLongitude());
+        pos = factory.createPosition(59.0, -122.0, 10.0);
+        assertEquals(59.0, pos.getLatitude(), Constants.TEST_DELTA);
+        assertEquals(-122.0, pos.getLongitude(), Constants.TEST_DELTA);
         Distance altitude = pos.getAltitude();
-        assertTrue(altitude.getValue().compareTo(new BigDecimal("10")) == 0);
+        assertEquals(10.0, altitude.getValue(), Constants.TEST_DELTA);
         assertEquals(DistanceUnit.METER, altitude.getUnit());
     }
 
@@ -57,7 +54,7 @@ public class PositionFactoryTest extends AbstractIntegrationTest {
     @Test
     public void testMaxLatitude() {
         pos = factory.createPosition("90.0", "-122.0", "10.0");
-        assertEquals(new BigDecimal("90.0"), pos.getLatitude());
+        assertEquals(90.0, pos.getLatitude(), Constants.TEST_DELTA);
     }
 
     /**
@@ -66,7 +63,7 @@ public class PositionFactoryTest extends AbstractIntegrationTest {
     @Test
     public void testMinLatitude() {
         pos = factory.createPosition("-90.0", "-122.0", "10.0");
-        assertEquals(new BigDecimal("-90.0"), pos.getLatitude());
+        assertEquals(-90.0, pos.getLatitude(), Constants.TEST_DELTA);
     }
 
     /**
@@ -92,7 +89,7 @@ public class PositionFactoryTest extends AbstractIntegrationTest {
     @Test
     public void testMaxLongitude() {
         pos = factory.createPosition("59.0", "180.0", "10.0");
-        assertEquals(new BigDecimal("180.0"), pos.getLongitude());
+        assertEquals(180.0, pos.getLongitude(), Constants.TEST_DELTA);
     }
 
     /**
@@ -101,7 +98,7 @@ public class PositionFactoryTest extends AbstractIntegrationTest {
     @Test
     public void testMinLongitude() {
         pos = factory.createPosition("59.0", "-180.0", "10.0");
-        assertEquals(new BigDecimal("-180.0"), pos.getLongitude());
+        assertEquals(-180.0, pos.getLongitude(), Constants.TEST_DELTA);
     }
 
     /**

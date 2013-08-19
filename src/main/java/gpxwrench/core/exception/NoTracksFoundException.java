@@ -11,7 +11,9 @@ import com.topografix.gpx.GpxType;
  */
 public class NoTracksFoundException extends Exception {
     
-    /**
+	private static final long serialVersionUID = 1L;
+	
+	/**
      * The parsed GPX object in which no tracks were found.
      */
     private final GpxType gpx;
@@ -23,5 +25,12 @@ public class NoTracksFoundException extends Exception {
     public NoTracksFoundException(GpxType gpx) {
         this.gpx = gpx;
     }
+    
+    /**
+     * @return parsed GPX object
+     */
+	public GpxType getGpx() {
+		return gpx;
+	}
 
 }

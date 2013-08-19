@@ -1,6 +1,9 @@
 package gpxwrench.core.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import gpxwrench.core.Constants;
 import gpxwrench.core.domain.Track;
 import gpxwrench.core.domain.TrackPoint;
 import gpxwrench.core.domain.TrackSegment;
@@ -10,7 +13,6 @@ import gpxwrench.core.test.AbstractIntegrationTest;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.TimeZone;
@@ -95,10 +97,10 @@ public class GpxParserServiceParseTracksTest extends AbstractIntegrationTest {
          * </trkpt>
          */
         TrackPoint point = getTrackPoint(0);
-        assertTrue(point.getLatitude().compareTo(new BigDecimal("56.459316")) == 0);
-        assertTrue(point.getLongitude().compareTo(new BigDecimal("-132.385025")) == 0);
+        assertEquals(56.459316, point.getLatitude(), Constants.TEST_DELTA);
+        assertEquals(-132.385025, point.getLongitude(), Constants.TEST_DELTA);
         Distance altitude = point.getAltitude();
-        assertTrue(altitude.getValue().compareTo(new BigDecimal("3")) == 0);
+        assertEquals(3.0, altitude.getValue(), Constants.TEST_DELTA);
         assertEquals(1, point.getSequence());
         
         //validate timestamp (holy crap, Java - could you make dates more difficult?)

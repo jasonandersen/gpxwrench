@@ -1,6 +1,5 @@
 package gpxwrench.core.measurement;
 
-import java.math.BigDecimal;
 
 
 /**
@@ -10,7 +9,7 @@ import java.math.BigDecimal;
  */
 public class Velocity {
     
-    private final BigDecimal value;
+    private final double value;
     
     private final VelocityUnit unit;
     
@@ -19,12 +18,12 @@ public class Velocity {
      * @param value
      * @param unit
      */
-    public Velocity(BigDecimal value, VelocityUnit unit) {
+    public Velocity(double value, VelocityUnit unit) {
         this.value = value;
         this.unit = unit;
     }
 
-    public BigDecimal getValue() {
+    public double getValue() {
         return value;
     }
 

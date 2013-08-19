@@ -1,14 +1,13 @@
 package gpxwrench.core.calculation;
 
-import static org.junit.Assert.assertTrue;
-
-import java.math.BigDecimal;
-
-import org.junit.Test;
-
+import static org.junit.Assert.assertEquals;
+import gpxwrench.core.Constants;
 import gpxwrench.core.measurement.Distance;
+import gpxwrench.core.measurement.DistanceUnit;
 import gpxwrench.core.position.Position;
 import gpxwrench.core.position.PositionFactory;
+
+import org.junit.Test;
 
 
 /**
@@ -33,13 +32,12 @@ public class DistanceCalculationTest {
      */
     @Test
     public void testOneDegreeLatitude() {
+    	final double ACCEPTABLE_DELTA = 10.0; //allow a 10 meter delta
         posA = factory.createPosition("45", "-122", "0");
         posB = factory.createPosition("46", "-122", "0");
         distance = calc.distance(posA, posB);
-        BigDecimal expectedDistance = new BigDecimal(1852 * 60);
-        System.out.println(distance.toString());
-        System.out.println(expectedDistance + " METERS");
-        assertTrue(distance.getValue().compareTo(expectedDistance) == 0);
+        double expectedDistance = DistanceUnit.NAUTICAL_MILE.getMeters() * Constants.NM_PER_DEG_LAT;
+        assertEquals(expectedDistance, distance.getValue(), ACCEPTABLE_DELTA);
     }
     
     /*

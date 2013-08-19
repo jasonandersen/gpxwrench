@@ -2,7 +2,6 @@ package gpxwrench.core.position;
 
 import gpxwrench.core.measurement.Distance;
 
-import java.math.BigDecimal;
 
 
 /**
@@ -14,9 +13,9 @@ import java.math.BigDecimal;
  */
 public class SimplePosition implements Position {
     
-    private final BigDecimal latitude;
+    private final double latitude;
     
-    private final BigDecimal longitude;
+    private final double longitude;
     
     private final Distance altitude;
     
@@ -26,7 +25,7 @@ public class SimplePosition implements Position {
      * @param longitude
      * @param altitude
      */
-    protected SimplePosition(BigDecimal latitude, BigDecimal longitude, Distance altitude) {
+    protected SimplePosition(double latitude, double longitude, Distance altitude) {
         this.altitude = altitude;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -35,14 +34,14 @@ public class SimplePosition implements Position {
     /* 
      * @see gpxwrench.core.Position#getLatitude()
      */
-    public BigDecimal getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
     /* 
      * @see gpxwrench.core.Position#getLongitude()
      */
-    public BigDecimal getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
