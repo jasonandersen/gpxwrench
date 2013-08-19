@@ -35,23 +35,20 @@ public class GpxParserServiceImpl implements GpxParserService {
     
     private final ConversionService conversionService;
     
-    private final List<TrackSegmentProcessor> segmentProcessors;
+    private List<TrackSegmentProcessor> segmentProcessors;
     
     /**
      * Constructor.
      * @param serializationService
      * @param conversionService
-     * @param outlierService
      */
     @Autowired
     public GpxParserServiceImpl(
             GpxSerializationService serializationService, 
-            ConversionService conversionService,
-            List<TrackSegmentProcessor> segmentProcessors) {
+            ConversionService conversionService) {
         
         this.serializationService = serializationService;
         this.conversionService = conversionService;
-        this.segmentProcessors = segmentProcessors;
     }
     
     /* 

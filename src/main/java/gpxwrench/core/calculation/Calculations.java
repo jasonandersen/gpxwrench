@@ -6,6 +6,7 @@ import org.apache.commons.lang3.Validate;
 
 import gpxwrench.core.domain.TrackPoint;
 import gpxwrench.core.measurement.Distance;
+import gpxwrench.core.measurement.DistanceUnit;
 import gpxwrench.core.measurement.Velocity;
 import gpxwrench.core.measurement.VelocityUnit;
 import gpxwrench.core.position.Position;
@@ -26,13 +27,26 @@ public class Calculations {
      *      is null, will return zero.
      */
     public Distance distance(Position a, Position b) {
-        
-        return null;
+        //TODO - implement distance method
+    	double distanceDbl = distance(
+    			a.getLatitude().doubleValue(), b.getLatitude().doubleValue(), 
+    			a.getLongitude().doubleValue(), b.getLongitude().doubleValue(), 
+    			a.getAltitude().getValue().doubleValue(), b.getAltitude().getValue().doubleValue());
+    	BigDecimal distance = BigDecimal.valueOf(distanceDbl);
+    	return new Distance(distance, DistanceUnit.METER);
     }
     
     
-    
-    /*
+    /**
+     * @return a distance object representing zero meters
+     */
+    private Distance zeroDistance() {
+		return new Distance(BigDecimal.ZERO, DistanceUnit.METER);
+	}
+
+
+
+	/*
      * Calculate distance between two points in latitude and longitude taking
      * into account height difference. If you are not interested in height
      * difference pass 0.0. Uses Haversine method as its base.
@@ -45,25 +59,55 @@ public class Calculations {
 
         final int R = 6371; // Radius of the earth
 
-        Double latDistance = deg2rad(lat2 - lat1);
-        Double lonDistance = deg2rad(lon2 - lon1);
+        Double latDistance = convertDegreesToRadians(lat2 - lat1);
+        Double lonDistance = convertDegreesToRadians(lon2 - lon1);
         Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2))
+                + Math.cos(convertDegreesToRadians(lat1)) * Math.cos(convertDegreesToRadians(lat2))
                 * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
         Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double distance = R * c * 1000; // convert to meters
 
         double height = el1 - el2;
         distance = Math.pow(distance, 2) + Math.pow(height, 2);
-        return Math.sqrt(distance);}
+        return Math.sqrt(distance);
+    }
+    
+
+	/*
+     * Calculate distance between two points in latitude and longitude taking
+     * into account height difference. If you are not interested in height
+     * difference pass 0.0. Uses Haversine method as its base.
+     * 
+     * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters
+     * el2 End altitude in meters
+     */
+    private BigDecimal distance(BigDecimal lat1, BigDecimal lat2, BigDecimal lon1, BigDecimal lon2,
+            BigDecimal el1, BigDecimal el2) {
+
+        final int R = 6371; // Radius of the earth in kilometers
+
+        BigDecimal latDistance = convertDegreesToRadians(lat2.subtract(lat1));
+        BigDecimal lonDistance = convertDegreesToRadians(lon2.subtract(lon1));
+        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(convertDegreesToRadians(lat1)) * Math.cos(convertDegreesToRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+
+        double height = el1 - el2;
+        distance = Math.pow(distance, 2) + Math.pow(height, 2);
+        return Math.sqrt(distance);
+    }
+    
     
     /**
      * Converts degrees into radians
      * @param deg
      * @return
      */
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
+    private BigDecimal convertDegreesToRadians(BigDecimal deg) {
+    	BigDecimal pi = BigDecimal.valueOf(Math.PI);
+        return deg.multiply(pi).divide(BigDecimal.valueOf(180.0));
     }
 
     
@@ -105,6 +149,9 @@ public class Calculations {
      * @throws IllegalArgumentException when either parameter is null
      */
     public BigDecimal bearing(Position begin, Position end) {
+    	
+    	//TODO - implement bearing
+    	
         return null;
     }
     
@@ -117,6 +164,9 @@ public class Calculations {
      * @return
      */
     public Distance deflection(Position start, Position mid, Position end) {
+    	
+    	//TODO - implement deflection
+    	
         return null;
     }
     

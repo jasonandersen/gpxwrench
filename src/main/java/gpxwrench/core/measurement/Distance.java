@@ -11,6 +11,8 @@ import java.math.BigDecimal;
  */
 public class Distance {
     
+	private final static String TO_STRING = "%s %s";
+	
     private final BigDecimal value;
     
     private final DistanceUnit unit;
@@ -31,5 +33,9 @@ public class Distance {
     
     public DistanceUnit getUnit() {
         return unit;
+    }
+    
+    public String toString() {
+    	return String.format(TO_STRING, value.toString(), unit);
     }
 }
