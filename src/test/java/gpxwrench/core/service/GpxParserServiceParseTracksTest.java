@@ -44,7 +44,7 @@ public class GpxParserServiceParseTracksTest extends AbstractIntegrationTest {
      */
     @Before
     public void setup() throws IOException, NoTracksFoundException {
-        ClassPathResource resource = new ClassPathResource("/gpxwrench/core/service/GpxParserServiceParseTracksTest-file1.gpx");
+        ClassPathResource resource = new ClassPathResource("GpxParserServiceParseTracksTest-file1.gpx");
         gpxFile = resource.getFile();
         tracks = parserService.parseTracks(gpxFile);
     }

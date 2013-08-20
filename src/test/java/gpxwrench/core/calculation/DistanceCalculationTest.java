@@ -17,6 +17,11 @@ import org.junit.Test;
  */
 public class DistanceCalculationTest {
     
+	/**
+	 * Test results must be at least 99.9% accurate in order to pass.
+	 */
+	private static final double ACCURACY_PCT = 0.001;
+	
     private Calculations calc = new Calculations();
     
     private PositionFactory factory = new PositionFactory();
@@ -32,12 +37,22 @@ public class DistanceCalculationTest {
      */
     @Test
     public void testOneDegreeLatitude() {
-    	final double ACCEPTABLE_DELTA = 10.0; //allow a 10 meter delta
         posA = factory.createPosition("45", "-122", "0");
         posB = factory.createPosition("46", "-122", "0");
         distance = calc.distance(posA, posB);
         double expectedDistance = DistanceUnit.NAUTICAL_MILE.getMeters() * Constants.NM_PER_DEG_LAT;
-        assertEquals(expectedDistance, distance.getValue(), ACCEPTABLE_DELTA);
+        assertDistance(distance, expectedDistance);
+    }
+    
+    /**
+     * Asserts that the calculated distance is within the margin of error of the expected distance.
+     * @param distance
+     * @param expectedDistance distance value in meters
+     */
+    private void assertDistance(Distance distance, double expectedDistance) {
+    	double actualDistance = distance.getValue();
+    	double delta = expectedDistance * ACCURACY_PCT;
+    	assertEquals(expectedDistance, actualDistance, delta);
     }
     
     /*

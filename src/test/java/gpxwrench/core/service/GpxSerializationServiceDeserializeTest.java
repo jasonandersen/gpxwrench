@@ -36,8 +36,7 @@ public class GpxSerializationServiceDeserializeTest {
     @Before
     public void setup() throws IOException {
         service = new GpxSerializationServiceJaxbImpl();
-        ClassPathResource resource = new ClassPathResource(
-                "/gpxwrench/core/service/GpxSerializationServiceDeserializeTest-file1.gpx");
+        ClassPathResource resource = new ClassPathResource("GpxSerializationServiceDeserializeTest-file1.gpx");
         gpx = service.deserialize(resource.getFile());
     }
     
