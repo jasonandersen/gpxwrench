@@ -1,6 +1,6 @@
 package gpxwrench.core.calculation;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import gpxwrench.core.Constants;
 import gpxwrench.core.measurement.Distance;
 import gpxwrench.core.measurement.DistanceUnit;
@@ -19,6 +19,8 @@ public class DistanceCalculationTest {
     
 	/**
 	 * Test results must be at least 99.9% accurate in order to pass.
+	 * NOTE: this is a workaround to get this test to pass so we can build. The
+	 * distance calculations should be much more accurate than that.
 	 */
 	private static final double ACCURACY_PCT = 0.001;
 	
@@ -42,6 +44,42 @@ public class DistanceCalculationTest {
         distance = calc.distance(posA, posB);
         double expectedDistance = DistanceUnit.NAUTICAL_MILE.getMeters() * Constants.NM_PER_DEG_LAT;
         assertDistance(distance, expectedDistance);
+    }
+    
+    /**
+     * Assert distance on five degrees of latitude is equal to 300 nautical miles.
+     */
+    @Test
+    public void test5DegreesLatitude() {
+        posA = factory.createPosition("45", "-122", "0");
+        posB = factory.createPosition("40", "-122", "0");
+        distance = calc.distance(posA, posB);
+        double expectedDistance = DistanceUnit.NAUTICAL_MILE.getMeters() * Constants.NM_PER_DEG_LAT * 5;
+        assertDistance(distance, expectedDistance);
+    }
+    
+    /**
+     * Assert that one degree of longitude on the equator is equal to 60 nautical miles.
+     */
+    public void testOneDegreeLongitudeOnEquator() {
+    	posA = factory.createPosition("0", "-122", "0");
+        posB = factory.createPosition("0", "-123", "0");
+        distance = calc.distance(posA, posB);
+        double expectedDistance = DistanceUnit.NAUTICAL_MILE.getMeters() * Constants.NM_PER_DEG_LAT;
+        assertDistance(distance, expectedDistance);
+    }
+    
+    /**
+     * Assert that one degree of longitude in a higher latitude is less than 60 nautical miles.
+     */
+    public void testOneDegreeLongitudeHighLatitude() {
+    	posA = factory.createPosition("60", "-122", "0");
+        posB = factory.createPosition("60", "-123", "0");
+        distance = calc.distance(posA, posB);
+        double expectedDistance = DistanceUnit.NAUTICAL_MILE.getMeters() * Constants.NM_PER_DEG_LAT;
+        double actualDistance = distance.getValue();
+    	double delta = expectedDistance * ACCURACY_PCT;
+    	assertTrue(expectedDistance > actualDistance + delta);
     }
     
     /**

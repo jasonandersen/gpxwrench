@@ -27,8 +27,7 @@ public class Calculations {
      *      is null, will return zero.
      */
     public Distance distance(Position a, Position b) {
-        //TODO - implement distance method
-    	double distance = distance(
+     	double distance = distance(
     			a.getLatitude(), b.getLatitude(), 
     			a.getLongitude(), b.getLongitude(), 
     			a.getAltitude().getValue(), b.getAltitude().getValue());
