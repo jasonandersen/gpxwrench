@@ -1,8 +1,6 @@
 package gpxwrench.core.calculation;
 
 
-import org.apache.commons.lang3.Validate;
-
 import gpxwrench.core.Constants;
 import gpxwrench.core.domain.TrackPoint;
 import gpxwrench.core.measurement.Distance;
@@ -10,6 +8,8 @@ import gpxwrench.core.measurement.DistanceUnit;
 import gpxwrench.core.measurement.Velocity;
 import gpxwrench.core.measurement.VelocityUnit;
 import gpxwrench.core.position.Position;
+
+import org.apache.commons.lang3.Validate;
 
 
 /**
