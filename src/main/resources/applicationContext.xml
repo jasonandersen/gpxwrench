@@ -9,7 +9,7 @@
     http://www.springframework.org/schema/context/spring-context.xsd" >
 
     <!-- enable annotation-based dependency injection and automatic package scanning -->
-    <context:component-scan base-package="gpxwrench.core.service,gpxwrench.core.position"/>
+    <context:component-scan base-package="gpxwrench.core"/>
     
     <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
         <property name="converters">

@@ -10,6 +10,8 @@ import gpxwrench.core.measurement.VelocityUnit;
 import gpxwrench.core.position.Position;
 
 import org.apache.commons.lang3.Validate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -17,8 +19,20 @@ import org.apache.commons.lang3.Validate;
  * @author Jason Andersen andersen.jason@gmail.com
  * @since  Jun 16, 2013
  */
+@Component
 public class Calculations {
     
+	private final DistanceCalculator distanceCalc;
+	
+	/**
+	 * Constructor
+	 * @param distanceCalc
+	 */
+	@Autowired
+	public Calculations(DistanceCalculator distanceCalc) {
+		this.distanceCalc = distanceCalc;
+	}
+	
     /**
      * Calculates the distance between two positions.
      * @param a
@@ -27,51 +41,8 @@ public class Calculations {
      *      is null, will return zero.
      */
     public Distance distance(Position a, Position b) {
-     	double distance = distance(
-    			a.getLatitude(), b.getLatitude(), 
-    			a.getLongitude(), b.getLongitude(), 
-    			a.getAltitude().getValue(), b.getAltitude().getValue());
-    	return new Distance(distance, DistanceUnit.METER);
+     	return distanceCalc.calculate(a, b);
     }
-
-
-	/*
-     * Calculate distance between two points in latitude and longitude taking
-     * into account height difference. If you are not interested in height
-     * difference pass 0.0. Uses Haversine method as its base.
-     * 
-     * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters
-     * el2 End altitude in meters
-     */
-    private double distance(double lat1, double lat2, double lon1, double lon2,
-            double el1, double el2) {
-
-
-        Double latDistance = convertDegreesToRadians(lat2 - lat1);
-        Double lonDistance = convertDegreesToRadians(lon2 - lon1);
-        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(convertDegreesToRadians(lat1)) * Math.cos(convertDegreesToRadians(lat2))
-                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double distance = Constants.EARTH_RADIUS_KM * c * 1000; // convert to meters
-
-        double height = el1 - el2;
-        distance = Math.pow(distance, 2) + Math.pow(height, 2);
-        return Math.sqrt(distance);
-    }
-    
-    /**
-     * Converts degrees into radians
-     * @param deg
-     * @return
-     */
-    private double convertDegreesToRadians(double deg) {
-    	return (deg * Math.PI) / 180.0;
-    }
-
-    
-    
-    
     
     /**
      * Calculates the average velocity between two track points.

@@ -10,6 +10,11 @@ package gpxwrench.core.measurement;
  */
 public class Distance {
     
+	/**
+	 * Shortcut constant to create a zero meter distance value
+	 */
+	public final static Distance ZERO_METERS = new Distance(0, DistanceUnit.METER);
+	
 	private final static String TO_STRING = "%d %s";
 	
     private final double value;

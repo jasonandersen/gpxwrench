@@ -9,11 +9,11 @@ package gpxwrench.core.measurement;
  */
 @SuppressWarnings("javadoc")
 public enum DistanceUnit {
-    FOOT(-1.0),
-    YARD(-1.0),
-    METER(1.0),
+    FOOT(-1.0), //TODO find feet per meter
+    YARD(-1.0), //TODO find yards per meter
+    METER(1.0), 
     KILOMETER(1000.0),
-    STATUTE_MILE(-1.0),
+    STATUTE_MILE(-1.0), //TODO find statute miles per meter
     NAUTICAL_MILE(1852.0);
     
     /**

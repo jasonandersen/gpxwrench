@@ -6,8 +6,10 @@ import gpxwrench.core.measurement.Distance;
 import gpxwrench.core.measurement.DistanceUnit;
 import gpxwrench.core.position.Position;
 import gpxwrench.core.position.PositionFactory;
+import gpxwrench.core.test.AbstractIntegrationTest;
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -15,7 +17,7 @@ import org.junit.Test;
  * @author Jason Andersen andersen.jason@gmail.com
  * @since  Jun 17, 2013
  */
-public class DistanceCalculationTest {
+public class DistanceCalculationTest extends AbstractIntegrationTest {
     
 	/**
 	 * Test results must be at least 99.9% accurate in order to pass.
@@ -24,7 +26,8 @@ public class DistanceCalculationTest {
 	 */
 	private static final double ACCURACY_PCT = 0.001;
 	
-    private Calculations calc = new Calculations();
+	@Autowired
+    private Calculations calc;
     
     private PositionFactory factory = new PositionFactory();
     
@@ -61,6 +64,7 @@ public class DistanceCalculationTest {
     /**
      * Assert that one degree of longitude on the equator is equal to 60 nautical miles.
      */
+    @Test
     public void testOneDegreeLongitudeOnEquator() {
     	posA = factory.createPosition("0", "-122", "0");
         posB = factory.createPosition("0", "-123", "0");
@@ -72,6 +76,7 @@ public class DistanceCalculationTest {
     /**
      * Assert that one degree of longitude in a higher latitude is less than 60 nautical miles.
      */
+    @Test
     public void testOneDegreeLongitudeHighLatitude() {
     	posA = factory.createPosition("60", "-122", "0");
         posB = factory.createPosition("60", "-123", "0");
