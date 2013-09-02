@@ -8,7 +8,6 @@ import gpxwrench.core.measurement.Distance;
 import gpxwrench.core.measurement.DistanceUnit;
 import gpxwrench.core.position.Position;
 
-import org.springframework.stereotype.Component;
 
 /**
  * Distance calculator using the Haversine formula.
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Component;
  * NOTE: currently using the {@link DistanceCalculatorSimpleLatLonImpl} implementation because
  * it's proven to be slightly more accurate.
  */
-//@Component
 public class DistanceCalculatorHaversineImpl implements DistanceCalculator {
 	
 	/*

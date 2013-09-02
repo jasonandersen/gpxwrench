@@ -86,6 +86,46 @@ public class DistanceCalculationTest extends AbstractIntegrationTest {
     	double delta = expectedDistance * ACCURACY_PCT;
     	assertTrue(expectedDistance > actualDistance + delta);
     }
+
+    /**
+     * Assert that equal points will return a zero distance.
+     */
+    @Test
+    public void testEqualPoints() {
+    	posA = factory.createPosition("45", "-122", "0");
+        posB = factory.createPosition("45", "-122", "0");
+        distance = calc.distance(posA, posB);
+        assertEquals(0.0, distance.getValue(), Constants.TEST_DELTA);
+    }
+
+    /**
+     * Assert that null point will return a zero distance.
+     */
+    @Test
+    public void testNullPointA() {
+        posB = factory.createPosition("45", "-122", "0");
+        distance = calc.distance(null, posB);
+        assertEquals(0.0, distance.getValue(), Constants.TEST_DELTA);
+    }
+    
+    /**
+     * Assert that null point will return a zero distance.
+     */
+    @Test
+    public void testNullPointB() {
+        posA = factory.createPosition("45", "-122", "0");
+        distance = calc.distance(posA, null);
+        assertEquals(0.0, distance.getValue(), Constants.TEST_DELTA);
+    }
+    
+    /**
+     * Assert that both null point will return a zero distance.
+     */
+    @Test
+    public void testBothNullPoints() {
+        distance = calc.distance(null, null);
+        assertEquals(0.0, distance.getValue(), Constants.TEST_DELTA);
+    }
     
     /**
      * Asserts that the calculated distance is within the margin of error of the expected distance.
