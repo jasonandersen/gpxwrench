@@ -1,18 +1,17 @@
 package gpxwrench.core.conversion;
 
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
-
 import gpxwrench.core.domain.TrackPoint;
 import gpxwrench.core.position.Position;
 import gpxwrench.core.position.PositionFactory;
+
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 
 import com.topografix.gpx.WptType;
-
 
 /**
  * Converts GPX {@link WptType} objects to {@link TrackPoint} domain objects.
@@ -20,12 +19,15 @@ import com.topografix.gpx.WptType;
  * @since  Jun 13, 2013
  */
 public class WptTypeToTrackPointConverter implements Converter<WptType, TrackPoint> {
-    
+
+    /**
+     * Default timezone for all track point timestamps.
+     */
     private static final TimeZone DEFAULT_TZ = TimeZone.getTimeZone("GMT");
-    
+
     @Autowired
     private PositionFactory positionFactory;
-    
+
     /* 
      * @see org.springframework.core.convert.converter.Converter#convert(java.lang.Object)
      */
@@ -34,7 +36,7 @@ public class WptTypeToTrackPointConverter implements Converter<WptType, TrackPoi
             return null;
         }
         Position position = positionFactory.createPosition(
-        		source.getLat().doubleValue(), source.getLon().doubleValue(), source.getEle().doubleValue());
+                source.getLat().doubleValue(), source.getLon().doubleValue(), source.getEle().doubleValue());
         GregorianCalendar timestamp = source.getTime().toGregorianCalendar(DEFAULT_TZ, Locale.getDefault(), null);
         Integer sequence = source.getSequence();
         return new TrackPoint(position, timestamp, sequence);

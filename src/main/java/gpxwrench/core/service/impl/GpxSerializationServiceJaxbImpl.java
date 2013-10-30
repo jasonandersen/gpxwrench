@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 
 import com.topografix.gpx.GpxType;
 
-
 /**
  * An implementation of the {@link GpxSerializationService} interface using JAXB.
  * @author Jason Andersen andersen.jason@gmail.com
  * @since  Jun 8, 2013
  */
+@SuppressWarnings("restriction")
 @Service
 public class GpxSerializationServiceJaxbImpl implements GpxSerializationService {
 

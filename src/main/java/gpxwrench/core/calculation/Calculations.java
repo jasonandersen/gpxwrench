@@ -1,7 +1,5 @@
 package gpxwrench.core.calculation;
 
-
-import gpxwrench.core.Constants;
 import gpxwrench.core.domain.TrackPoint;
 import gpxwrench.core.measurement.Distance;
 import gpxwrench.core.measurement.DistanceUnit;
@@ -13,7 +11,6 @@ import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
 /**
  * This class performs mathmatical calculations on geometric points.
  * @author Jason Andersen andersen.jason@gmail.com
@@ -21,18 +18,21 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Calculations {
-    
-	private final DistanceCalculator distanceCalc;
-	
-	/**
-	 * Constructor
-	 * @param distanceCalc
-	 */
-	@Autowired
-	public Calculations(DistanceCalculator distanceCalc) {
-		this.distanceCalc = distanceCalc;
-	}
-	
+
+    private final DistanceCalculator distanceCalc;
+
+    private final BearingCalculator bearingCalc;
+
+    /**
+     * Constructor
+     * @param distanceCalc
+     */
+    @Autowired
+    public Calculations(DistanceCalculator distanceCalc, BearingCalculator bearingCalc) {
+        this.distanceCalc = distanceCalc;
+        this.bearingCalc = bearingCalc;
+    }
+
     /**
      * Calculates the distance between two positions.
      * @param a
@@ -41,9 +41,9 @@ public class Calculations {
      *      is null, will return zero.
      */
     public Distance distance(Position a, Position b) {
-     	return distanceCalc.calculate(a, b);
+        return distanceCalc.calculate(a, b);
     }
-    
+
     /**
      * Calculates the average velocity between two track points.
      * @param begin
@@ -55,51 +55,57 @@ public class Calculations {
         Validate.notNull(end);
         Validate.notNull(begin.getTimestamp());
         Validate.notNull(end.getTimestamp());
-        
+
         long beginMillis = begin.getTimestamp().getTimeInMillis();
         long endMillis = end.getTimestamp().getTimeInMillis();
         long durationInMillis = endMillis - beginMillis;
         if (durationInMillis == 0L) {
             //avoid the divide by zero error
-            return new Velocity(0, VelocityUnit.METERS_PER_SECOND);
+            return Velocity.ZERO_MPS;
         }
-        
-        double durationInSeconds = (double)durationInMillis / 1000.0;
-        
+
+        double durationInSeconds = durationInMillis / 1000.0;
+
         Distance distance = distance(begin, end);
-        double velocityMps =  distance.getValue() / durationInSeconds;
+        double velocityMps = distance.getValue() / durationInSeconds;
         return new Velocity(velocityMps, VelocityUnit.METERS_PER_SECOND);
     }
-    
+
     /**
-     * Calculates the bearing in degrees from <code>begin</code> to <code>end</code>.
+     * Calculates the bearing in degrees from <code>begin</code> to <code>end</code>. Ignores altitude.
      * @param begin
      * @param end
      * @return positive bearing in degrees
      * @throws IllegalArgumentException when either parameter is null
      */
     public double bearing(Position begin, Position end) {
-    	
-    	//TODO - implement bearing
-    	
-        return -1;
+        return bearingCalc.bearing(begin, end);
     }
-    
+
     /**
      * Calculates the perpendicular distance the <code>mid</code> position sits off the line
-     * running from <code>start</code> to </code>end</code>.
+     * running from <code>start</code> to </code>end</code>. Ignores altitude.
      * @param start
      * @param mid
      * @param end
      * @return
      */
     public Distance deflection(Position start, Position mid, Position end) {
-    	
-    	//TODO - implement deflection
-    	
-        return null;
+        Validate.notNull(start);
+        Validate.notNull(mid);
+        Validate.notNull(end);
+        /*
+         * the formula for deflection is:
+         * distance(start, mid) * sin(abs(bearing(start, mid) - bearing(start, end))) 
+         */
+        double bearingStartEnd = bearing(start, end);
+        double bearingStartMid = bearing(start, mid);
+        double deflectionAngle = Math.abs(bearingStartMid - bearingStartEnd);
+        double spanStartMid = distance(start, mid).getValue();
+        double distance = spanStartMid * Math.sin(deflectionAngle);
+        return new Distance(distance, DistanceUnit.METER);
     }
-    
+
     /**
      * Calculates the significance of the <code>target</code> point within the track segment
      * defined from the <code>start</code> point to the <code>end</code> point.
@@ -111,7 +117,6 @@ public class Calculations {
     public double significance(Position start, Position target, Position end) {
         /*
          * The significance of a point over a span defined from start to end is considered to be:
-         * 
          *      deflection
          *      ----------
          *      sqrt(span)
